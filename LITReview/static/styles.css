@@ -1,0 +1,335 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+html {
+    font-family:Verdana, Tahoma, sans-serif;
+}
+
+body {
+    display: grid;
+}
+a:link, a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(169, 0, 192);
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color: rgb(32, 17, 46);   
+    color: white;
+    align-items: center;
+}
+
+header > h1 {
+    text-align: center;
+    flex: 1 0 auto;
+}
+
+
+h2 {
+    align-self: center;
+}
+
+.nav_bar {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 25px;
+}
+
+#username {
+    color: rgb(124, 124, 124);
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+li {
+    margin-left: 10px;
+    list-style: none;
+}
+
+li > a {
+    color: white;
+}
+
+main {
+    display: flex;
+}
+.container {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    max-width: 80%;
+    width: fit-content;
+}
+
+
+/* connexion & enregistrement  */
+
+.log_sign_page{
+    display: flex;
+    flex-direction: row;
+}
+.log_form {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 10px 5px 10px;
+    padding: 5px 10px 5px 10px;
+    width: 50%;
+    border: 1px solid;
+}
+.log_form > button {
+    width: fit-content;
+    align-self: center;
+    margin-top: 30px;
+}
+/* creation / edition - ticket & review */
+
+article.edit_del_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+article.edit_del_form > section {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.edit_form {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+/* creation ticket & review */
+.review > form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid;
+    padding: 5px;
+}
+.write_form {
+    border: 1px solid;
+    border-radius: 5px;
+}
+.write_form > form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    
+    padding: 5px;
+}
+
+form > p, button {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+form > button {
+    align-self: flex-end;
+}
+
+#id_rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+section.form {
+    margin: 10px;
+}
+section.form > p {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+section.form > button {
+    color: blue;
+    position: relative;
+    right: 0px;
+}
+
+/* feed & posts */
+.actions {
+    display: flex;
+    margin: auto;
+}
+.actions > button {
+    margin: 10px;
+    background-color: rgb(32, 17, 46);
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 3px;
+}
+.actions > button:hover {
+    background-color: white;
+    border: 1px solid rgb(32, 17, 46);
+}
+
+.actions > button > a {
+    color: white;
+}
+.actions > button > a:hover {
+    color: rgb(32, 17, 46);
+}
+.posts {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.button_post > button {
+    margin: 10px;
+    background-color: rgb(32, 17, 46);
+    border-radius: 5px;
+    border: 1px solid white;
+    justify-content: center;
+    padding: 3px;   
+}
+.button_post > button:hover {
+    background-color: white;
+    border: 1px solid rgb(32, 17, 46);
+}
+
+.button_post > button > a {
+    color: white;
+}
+.button_post > button > a:hover {
+    color: rgb(32, 17, 46);
+}
+
+/* abonnements */
+
+.follow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    background-color: aquamarine;
+}
+.follow_table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.follow_table > form {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.follow_table table {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid;
+    margin: 3px;
+}
+
+.follow_table tr:nth-child(even) {
+    background-color: rgb(228, 228, 228);
+}
+
+.follow_table td {
+    padding: 5px;
+}
+
+.follow_table td:nth-child(odd) {
+    text-align: left;
+}
+.follow_table td:nth-child(even) {
+    text-align: right;
+}
+
+/* review & ticket */
+
+article.post {
+    max-width: 100%;
+    border: 1px solid black;
+    margin: 10px 0px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+}
+section.post_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-style: italic;
+    color: grey;
+}
+
+section.post_content {
+    display: flex;
+    flex-direction: column;
+}
+.title_rating {
+    display: flex;
+    flex-direction: row;
+    font-size: x-large;
+    font-weight: bold;
+}
+.rating {
+    display: flex;
+    flex-direction: row;
+}
+.content {
+    margin-right: 10px;
+}
+.review_ticket {
+    margin: 5px;
+    background-color: rgb(218, 218, 218);
+}
+.content > img {
+    width: auto;
+    height: auto;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+section.button_post {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+
+section.button_post > button {
+    margin-left: 10px;
+}
+
+hr {
+    border-top: 3px double #333;
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+}

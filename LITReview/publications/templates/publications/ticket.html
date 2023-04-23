@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="post">
+    <p>{{ ticket.user }} a posté un ticket| {{ ticket.time_created }}</p>
+    <h2><a href="{% url 'publications:ticket' ticket.id %}">{{ ticket.title }}</a></h2>
+    
+    <p>{{ ticket.description }}</p>
+    
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}">
+    {% endif %}
+    {% if ticket.available is True %}
+        <button type="button"><a href="{% url 'publications:create-review-ticket' ticket.id %}">Créer une critique</a></button>
+    {% endif %}
+
+    {% if ticket.user == request.user %}
+        <button><a href="{% url 'publications:edit-ticket' ticket.id %}">modifier</a></button>
+    {% endif %}
+</div>
+{% endblock content %}

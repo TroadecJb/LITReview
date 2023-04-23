@@ -1,0 +1,44 @@
+{% load publications_extras %}
+<article class="post">
+    <section class="post_info">
+        <div class="user_info">
+            {% if review.user == request.user %}
+                <p>Vous avez publié une critique</p>
+            {% else %}
+                <p>{{ review.user }} a publié une critique</p>
+            {% endif %}
+        </div>
+        <div class="time_info">
+            {{ review.time_created }}
+        </div>
+    </section>
+    <section class="post_content">
+        <div class="title_rating">
+            <p>{{ review.headline }}</p>
+            <div class="rating">
+                {% for _ in rating_range %}
+                    {% if forloop.counter0 >= review.rating %}
+                        <p>{{ rating_off }}</p>
+                    {% else %}
+                        <p>{{ rating_on}}</p>
+                    {% endif %}
+                {% endfor %}    
+            </div>
+        </div>
+        <div class="content">
+            <p>{{ review.body }}</p>
+    
+            {% if review.ticket != null %}
+                <section class="review_ticket">
+                    {% include 'publications/partials/ticket_snippet.html' with ticket=review.ticket %}
+                </section>
+            {% endif %}
+        </div>       
+    </section>
+    <section class="button_post">
+        {% if review.user == request.user %}
+        <button><a href="{% url 'publications:edit-review' review.id %}">modifier</a></button>
+        {% endif %}
+    </section>
+</article>
+

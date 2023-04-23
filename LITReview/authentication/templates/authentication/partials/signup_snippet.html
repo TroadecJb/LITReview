@@ -1,0 +1,11 @@
+<div class="log_form">
+    <h2>Inscription</h2>
+    <form method="post">
+        {{ form.as_p}}
+        {% csrf_token %}
+        <button type="submit">S'inscrire</button>
+     </form>
+</div>
+
+
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <article class="edit_del_form">
+        <h2>Edit review + ticket</h2>
+        <section>
+            <form class="edit_form" method="post" enctype="multipart/form-data">
+            {{ edit_ticket_form.as_p }}           
+            <hr>
+            {{ edit_review_form.as_p }} 
+            {% csrf_token %}
+            <button type="submit">Save modification</button>
+        </form>
+        </section>
+        <h2>Supprimer le billet ?</h3>
+        <form method="post">
+            {{ delete_form }}
+            {% csrf_token %}
+            <button type="submit" >Supprimer</button>
+        </form>
+        
+    </article>
+{% endblock %}

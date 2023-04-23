@@ -1,0 +1,35 @@
+{% load publications_extras %}
+<article class="post">
+    <section class="post_info">
+        <div class="user_info">
+            {% if ticket.user == request.user %}
+                <p>Vous avez demandé une critique</p>
+            {% else %}
+                <p>{{ ticket.user }} a demandé une critique</p>
+            {% endif %}
+        </div>
+        <div class="time_info">
+            {{ ticket.time_created }}
+        </div>
+    </section>
+    <section class="post_content">
+        <div class="title_rating">
+            <p>{{ ticket.title }}</p>
+        </div>
+        <div class="content">
+            <p>{{ ticket.description }}</p>
+            {% if ticket.image %}
+            <img src="{{ ticket.image.url }}">
+            {% endif %}
+        </div>
+    </section>
+    <section class="button_post">
+        {% if ticket.available is True %}
+        <button type="button"><a href="{% url 'publications:create-review-ticket' ticket.id %}">Créer une critique</a></button>
+        {% endif %}
+
+        {% if ticket.user == request.user %}
+        <button><a href="{% url 'publications:edit-ticket' ticket.id %}">modifier</a></button>
+        {% endif %}
+    </section>
+</article>

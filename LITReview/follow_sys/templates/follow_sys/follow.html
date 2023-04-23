@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+   <div class="follow_table">
+      <h3>Suivre d'autres utilisateurs</h3>
+      <form method="post">
+         {{ follow_form.followed_user }}
+         {% csrf_token %}
+         <button type="submit">s'abonner</button>
+      </form>
+      {% if error_message is not None %}
+      <p class="error_message">{{ error_message }}</p>
+      {% elif validation_message is not None %}
+      <p class="validation_message">{{ validation_message }}</p>
+      {% endif %}
+   </div>
+   <div class="follow_table">
+      <h3>Abonnements</h3>
+      {% if subscriptions %}
+      <table>
+         {% for sub in subscriptions %}
+         <tr>
+            <td>
+               {{ sub.followed_user.username }}
+            </td>
+            <td>
+               <a href="{% url 'follow_sys:delete-subscription' sub.followed_user.id %}">désabonner</a>
+            </td>
+         </tr>
+         {% endfor %}
+      </table>
+      {% else %}  
+      <p>pas d'abonnement</p>
+      {% endif %}
+   </div>
+   <div class="follow_table">
+      <h3>Abonnés</h3>
+      {% if subscribers %}
+      <table>
+         {% for subscriber in subscribers %}
+         <tr>
+            <td>
+               {{ subscriber.username }}
+            </td>
+         </tr>
+         {% endfor %}
+      </table>
+         
+      {% else %}
+         <p>pas d'abonné</p>
+      {% endif %}
+   </div>
+
+
+{% endblock content %}

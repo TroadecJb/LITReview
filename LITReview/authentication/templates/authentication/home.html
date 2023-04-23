@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="log_sign_page">
+        <div class="log_form">
+            <h2>Inscription</h2>
+            <button type="button"><a href="{% url 'signup' %}">s'incrire</a></button>
+  
+        </div>
+        {% include "authentication/partials/login_snippet.html" %}
+    </div>
+
+{% endblock content %}

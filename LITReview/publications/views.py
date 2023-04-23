@@ -50,7 +50,7 @@ def selfPosts(request):
 
     content = sorted(chain(reviews, tickets), key=lambda i: i.time_created, reverse=True)
 
-    paginator = Paginator(content, 5)
+    paginator = Paginator(content, 4)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 

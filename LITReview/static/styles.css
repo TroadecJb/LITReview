@@ -80,6 +80,9 @@ main {
     width: fit-content;
 }
 
+span.helptext {
+    display: none;
+}
 
 /* connexion & enregistrement  */
 

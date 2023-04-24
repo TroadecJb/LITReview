@@ -2,14 +2,9 @@
 {% block content %}
     <div class="write_form">
         <p>Vous êtes en train de répondre à</p>
-        <div class="post">
-            <p>{{ ticket.user }} a posté un ticket| {{ ticket.time_created }}</p>
-            <p>{{ ticket.title }}</p>
-            <p>{{ ticket.description }}</p>
-            {% if ticket.image %}
-            <img src="{{ ticket.image.url }}">
-            {% endif %}
-        </div>
+        
+        {% include "publications/partials/ticket_snippet_buttonless.html" with ticket=ticket %}
+        
         <hr>
         <form method="post" enctype="multipart/form-data">
            

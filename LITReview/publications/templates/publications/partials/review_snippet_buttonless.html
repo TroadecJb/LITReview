@@ -30,16 +30,10 @@
     
             {% if review.ticket != null %}
                 <section class="review_ticket">
-                    {% include 'publications/partials/ticket_snippet.html' with ticket=review.ticket %}
+                    {% include 'publications/partials/ticket_snippet_buttonless.html' with ticket=review.ticket %}
                 </section>
             {% endif %}
         </div>       
-    </section>
-    <section class="button_post">
-        {% if review.user == request.user %}
-        <button><a href="{% url 'publications:edit-review' review.id %}">modifier</a></button>
-        <button><a href="{% url 'publications:delete-review' review.id %}">supprimer</a></button>
-        {% endif %}
     </section>
 </article>
 

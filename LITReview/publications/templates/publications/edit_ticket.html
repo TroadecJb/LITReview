@@ -10,12 +10,5 @@
                 <button type="submit">save modification</button>
             </form>
         </section>
-        
-        <h2>Supprimer le billet ?</h2>
-        <form method="post">
-            {{ delete_form }}
-            {% csrf_token %}
-            <button type="submit" >Supprimer</button>
-        </form>
     </article>
 {% endblock %}

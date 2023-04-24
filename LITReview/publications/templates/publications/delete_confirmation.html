@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load publications_extras %}
+{% block content %}
+<section>
+    {% if instance|model_type == "Review" %}
+        {% include "publications/partials/review_snippet_buttonless.html" with review=instance %}
+    {% elif instance|model_type == "Ticket" %}
+        {% include "publications/partials/ticket_snippet_buttonless.html" with ticket=instance %}
+    {% endif %} 
+</section>
+<section class="delete_form">
+    <h2>Êtes-vous sûre de vouloir supprimer ce post ?</h2>
+    <form method="post">
+        {{ delete_form }}
+        {% csrf_token %}
+        <button type="submit" >Supprimer</button>
+    </form>
+</section>
+
+{% endblock content %}

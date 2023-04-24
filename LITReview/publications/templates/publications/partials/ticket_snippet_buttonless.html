@@ -23,14 +23,4 @@
             {% endif %}
         </div>
     </section>
-    <section class="button_post">
-        {% if ticket.available is True %}
-        <button type="button"><a href="{% url 'publications:create-review-ticket' ticket.id %}">Créer une critique</a></button>
-        {% endif %}
-
-        {% if ticket.user == request.user %}
-        <button><a href="{% url 'publications:edit-ticket' ticket.id %}">modifier</a></button>
-        <button><a href="{% url 'publications:delete-ticket' ticket.id %}">supprimer</a></button>
-        {% endif %}
-    </section>
 </article>

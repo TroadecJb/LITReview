@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.views import generic
+from django.views.generic.edit import DeleteView
 from itertools import chain
 
 from follow_sys.models import UserFollows
@@ -18,7 +19,7 @@ def feed(request):
         user__in=[user_follow.followed_user for user_follow in UserFollows.objects.filter(user=request.user)]
     )
     tickets = Ticket.objects.filter(
-        Q(available=True) | Q(user=request.user)
+        Q(available=True)
     )
     
     content = sorted(
@@ -69,6 +70,57 @@ def ViewReview(request, review_id):
 def ViewTicket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     return render(request, "publications/ticket.html", {"ticket": ticket})
+
+@method_decorator(login_required, name="dispatch")
+class TicketDeleteConfirmation(generic.DetailView):
+    model = Ticket
+
+    def get(self, request, ticket_id):
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        if request.user == ticket.user:
+            delete_ticket_form = DeletePostForm()
+
+            context = {
+                "delete_form": delete_ticket_form,
+                "instance": ticket,
+            }
+
+            return render(request, "publications/delete_confirmation.html", context=context)
+        
+    def post(self, request, ticket_id):
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        if request.user == ticket.user:
+            delete_ticket_form = DeletePostForm(request.POST, request.FILES)
+            if delete_ticket_form.is_valid():
+                ticket.delete()
+                return redirect("publications:feed")
+            return redirect("publications:feed")
+
+@method_decorator(login_required, name="dispatch")
+class ReviewDeleteConfirmation(generic.DetailView):
+    def get(self, request, review_id):
+        review = get_object_or_404(Review, id=review_id)
+        if request.user == review.user:
+            delete_review_form = DeletePostForm()
+
+            context = {
+                "delete_form": delete_review_form,
+                "instance" : review,
+            }
+
+            return render(request, "publications/delete_confirmation.html", context=context)
+        
+    def post(self, request, review_id):
+        review = get_object_or_404(Review, id=review_id)
+        ticket = get_object_or_404(Ticket, id=review.ticket.id)
+        if request.user == review.user:
+            delete_review_form = DeletePostForm(request.POST)
+            if delete_review_form.is_valid():
+                ticket.available = True
+                ticket.save()
+                review.delete()
+                return redirect("publications:feed")
+            # return redirect("publications:feed")
 
 @method_decorator(login_required, name="dispatch")
 class CreateReview(generic.DetailView):
@@ -184,23 +236,19 @@ class EditReview(generic.DetailView):
         if request.user == review.user and request.user == ticket.user:
             edit_review_form = ReviewForm(instance=review)
             edit_ticket_from = TicketForm(instance=ticket)
-            delete_from = DeletePostForm()
 
             context = {
                 "edit_review_form": edit_review_form,
                 "edit_ticket_form": edit_ticket_from,
-                "delete_form": delete_from,
             }
 
             return render(request, "publications/edit_ticket_review.html", context=context)
         
         elif request.user == review.user and request.user != ticket.user:
             edit_review_form = ReviewForm(instance=review)
-            delete_from = DeletePostForm()
 
             context = {
                 "edit_review_form": edit_review_form,
-                "delete_form": delete_from,
             }
 
             return render(request, "publications/edit_review.html", context=context)
@@ -210,7 +258,6 @@ class EditReview(generic.DetailView):
         ticket = get_object_or_404(Ticket, id=review.ticket.id)
         edit_review_form = ReviewForm(instance=review)
         edit_ticket_from = TicketForm(instance=ticket)
-        delete_form = DeletePostForm()
         
         if "edit_review" in request.POST:
             if request.user == review.user and request.user == ticket.user:
@@ -230,13 +277,6 @@ class EditReview(generic.DetailView):
                     edit_review_form.save()
                 
                     return redirect("publications:feed")
-        
-        elif "delete_post" in request.POST:
-            delete_form = DeletePostForm(request.POST)
-            if delete_form.is_valid():
-                ticket.available = True
-                review.delete()
-                return redirect("publications:feed")
 
 
 @method_decorator(login_required, name="dispatch")     
@@ -249,11 +289,9 @@ class EditTicket(generic.DetailView):
         ticket = get_object_or_404(Ticket, id=ticket_id)
         if request.user == ticket.user:
             edit_ticket_form = TicketForm(instance=ticket)
-            delete_form = DeletePostForm()
 
             context = {
                 "edit_ticket_form": edit_ticket_form,
-                "delete_form": delete_form,
             }
 
             return render(request, "publications/edit_ticket.html", context=context)
@@ -267,12 +305,6 @@ class EditTicket(generic.DetailView):
 
                 if edit_ticket_form.is_valid():
                     edit_ticket_form.save()
-                    return redirect("publications:feed")
-            
-            elif "delete_post" in request.POST:
-                delete_form = DeletePostForm(request.POST)
-                if delete_form.is_valid():
-                    ticket.delete()
                     return redirect("publications:feed")
 
         return redirect("publications:feed")

@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>page d'inscription</p>
-<form method="post">
-   {{ form.as_p}}
-   {% csrf_token %}
-   <button type="submit">S'inscrire</button>
-</form>
+<h2>page d'inscription</h2>
+<article class="post">
+   <form method="post">
+      {{ form.as_p}}
+      {% csrf_token %}
+      <button type="submit">S'inscrire</button>
+   </form>
+</article>
+
 {% endblock content %}

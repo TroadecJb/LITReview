@@ -20,16 +20,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView
 
-from . import views
 
 urlpatterns = [
-    path("", LoginView.as_view(
-        template_name="authentication/home.html",
-        redirect_authenticated_user=True),
-        name="login"
+    path(
+        "",
+        LoginView.as_view(
+            template_name="authentication/home.html",
+            redirect_authenticated_user=True,
         ),
+        name="login",
+    ),
     path("admin/", admin.site.urls),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path("__debug__/", include("debug_toolbar.urls")),
     path("publications/", include("publications.urls")),
     path("follows/", include("follow_sys.urls")),
     path("authentication/", include("authentication.urls")),

@@ -14,16 +14,25 @@ from .forms import ReviewForm, TicketForm, DeletePostForm
 @login_required
 def feed(request):
     """Return every ticket available and made by the user, every review made by the user or users they follow."""
-    reviews = Review.objects.filter(
+
+    # reviews from followed users
+    reviews_from_follow = Review.objects.filter(
         user__in=[
             user_follow.followed_user
             for user_follow in UserFollows.objects.filter(user=request.user)
         ]
     )
-    tickets = Ticket.objects.filter(Q(available=True))
+
+    reviews_reply = Review.objects.filter(
+        ticket__in=Ticket.objects.filter(user=request.user)
+    ).exclude(user=request.user)
+
+    tickets = Ticket.objects.filter(Q(available=True) & ~Q(user=request.user))
 
     content = sorted(
-        chain(reviews, tickets), key=lambda i: i.time_created, reverse=True
+        chain(reviews_from_follow, reviews_reply, tickets),
+        key=lambda i: i.time_created,
+        reverse=True,
     )
 
     paginator = Paginator(content, 4)
@@ -43,7 +52,7 @@ def feed(request):
 def selfPosts(request):
     """Return every ticket and review made by the user."""
     reviews = Review.objects.filter(Q(user=request.user))
-    tickets = Ticket.objects.filter(Q(user=request.user))
+    tickets = Ticket.objects.filter(Q(user=request.user) & Q(available=True))
 
     content = sorted(
         chain(reviews, tickets), key=lambda i: i.time_created, reverse=True
@@ -55,6 +64,9 @@ def selfPosts(request):
 
     context = {
         "page_obj": page_obj,
+        "rating_range": RATING_RANGE,
+        "rating_on": RATING_ON,
+        "rating_off": RATING_OFF,
     }
 
     return render(request, "publications/posts.html", context=context)

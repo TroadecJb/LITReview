@@ -17,7 +17,7 @@ Les utilisateurs pourront consulter ou demander des critiques les uns aux autres
 
 
 ### Utilisation dans un environnement virtuel:
-- Python >= 3.10.6
+- Python >= 3.10.6  
 `$ python -m -venv <environment name>`
 
 - activation windows  

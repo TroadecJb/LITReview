@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    
-    <article class="edit_del_form">
-        <h2>Edit ticket</h2>
-        <section>
-            <form method="post" enctype="multipart/form-data">
-                {{ edit_ticket_form.as_p}}
-                {% csrf_token %}
-                <button type="submit">save modification</button>
-            </form>
-        </section>
-    </article>
+
+<article class="edit_del_form">
+    <h2>Edit ticket</h2>
+    <section>
+        <form method="post" enctype="multipart/form-data">
+            {{ edit_ticket_form.as_p}}
+            {% csrf_token %}
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+    </section>
+</article>
 {% endblock %}

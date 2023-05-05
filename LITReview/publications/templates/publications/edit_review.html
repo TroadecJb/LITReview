@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <article class="edit_del_form">
-        <h2>Edit review</h2>
-        <section>
-            <form method="post" enctype="multipart/form-data">
-                {{ edit_review_form.as_p }}
-                {% csrf_token %}
-                <button type="submit">Save modification</button>
-            </form>
-        </section>
-    </article>
+<article class="edit_del_form">
+    <h2>Edit review</h2>
+    <section>
+        <form method="post" enctype="multipart/form-data">
+            {{ edit_review_form.as_p }}
+            {% csrf_token %}
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+    </section>
+</article>
 {% endblock %}
